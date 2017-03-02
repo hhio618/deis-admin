@@ -1,0 +1,9 @@
+<dp-application-summary [app]="app"></dp-application-summary>
+
+<div class="container">
+  <div class="row my-5">
+    <div class="col-sm-12 col-md" *ngFor="let lane of lanes">
+      <dp-lane [lane]="lane"></dp-lane>
+    </div>
+  </div>
+</div>

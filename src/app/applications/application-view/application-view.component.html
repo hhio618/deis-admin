@@ -1,0 +1,156 @@
+<dp-application-summary [app]="app"></dp-application-summary>
+
+<div class="container">
+  <div class="card my-5">
+    <div class="card-block">
+
+      <h1 class="card-title">{{ app?.id }}</h1>
+
+      <p>
+        <strong>UUID:</strong> {{ app?.uuid }} <br/>
+        <strong>Owner:</strong> {{ app?.owner }} <br/>
+        <strong>Created:</strong> {{ app?.created | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }} <br/>
+        <strong>Updated:</strong> {{ app?.updated | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }} <br/>
+        <strong>Structure:</strong> {{ app?.structure | json }}
+      </p>
+
+      <button *ngIf="!config.values?.PIPELINE" (click)="createPipeline(app)" [disabled]="pipelineCreating" class="btn btn-primary">Create pipeline</button>
+      <button (click)="rollback(app)" [disabled]="rollingBack" class="btn btn-danger">Rollback</button>
+
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Domains</h2>
+      <p *ngIf="!domains.length">There are no domains.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>Owner</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let domain of domains">
+            <td>
+              <a target="_blank" href="http://{{ domain.domain + '.' + cluster }}">{{ domain.domain }}</a>
+            </td>
+            <td>{{ domain.owner }} </td>
+            <td>{{ domain.created | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Builds</h2>
+      <p *ngIf="!builds.length">There are no builds.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SHA</th>
+            <th>Dockerfile</th>
+            <th>Image</th>
+            <th>Procfile</th>
+            <th>Owner</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let build of builds">
+            <td>{{ build.sha }}</td>
+            <td>{{ build.dockerfile || '-' }}</td>
+            <td>{{ build.image || '-' }}</td>
+            <td>{{ build.procfile | json }}</td>
+            <td>{{ build.owner }}</td>
+            <td>{{ build.created | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Releases</h2>
+      <p *ngIf="!releases.length">There are no releases.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Summary</th>
+            <th>Owner</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let release of releases">
+            <td>{{ release.version }}</td>
+            <td>{{ release.summary }}</td>
+            <td>{{ release.owner }}</td>
+            <td>{{ release.created | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Pods</h2>
+      <p *ngIf="!pods.length">This application isn't on a pod yet.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Release</th>
+            <th>Type</th>
+            <th>State</th>
+            <th>Started</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pod of pods">
+            <td>{{ pod.name }}</td>
+            <td>{{ pod.release }}</td>
+            <td>{{ pod.type }}</td>
+            <td>{{ pod.state }}</td>
+            <td>{{ pod.started | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Permissions</h2>
+      <p *ngIf="!permissions.length">There are no permissions.</p>
+      <ul>
+        <li *ngFor="let permission of permissions">
+          <pre>{{ permission | json }}</pre>
+        </li>
+      </ul>
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Config</h2>
+
+      <dl>
+        <dt>Values</dt>
+        <dd><pre>{{ config.values | json }}</pre></dd>
+        <dt>Memory</dt>
+        <dd><pre>{{ config.memory | json }}</pre></dd>
+        <dt>CPU</dt>
+        <dd><pre>{{ config.cpu | json }}</pre></dd>
+        <dt>Tags</dt>
+        <dd><pre>{{ config.tags | json }}</pre></dd>
+        <dt>Registry</dt>
+        <dd><pre>{{ config.registry | json }}</pre></dd>
+        <dt>Healthcheck</dt>
+        <dd><pre>{{ config.healthcheck | json }}</pre></dd>
+      </dl>
+    </div>
+    <div class="card-block">
+
+      <h2 class="card-title">Logs</h2>
+      <pre><code>{{ logs }}</code></pre>
+
+    </div>
+  </div>
+</div>
+

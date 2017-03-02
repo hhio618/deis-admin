@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <a [routerLink]="['/apps', app.id]">{{ app.id }}</a>
+    <div>
+      <i class="fa fa-bars"></i>
+    </div>
+  </div>
+  <div class="card-block">
+    <p *ngIf="lane.id === 'review'" class="card-text">
+      <a href="#">#{{ app.ticketId }}</a>
+    </p>
+    <p *ngIf="lane.id !== 'review' && !app.builds?.length" class="card-text">
+      <small>No builds</small>
+    </p>
+    <p *ngIf="lane.id !== 'review' && app.builds?.length" class="card-text">
+      <a href="TODO"><span class="tag tag-default">{{ app.builds[0].sha }}</span></a>
+      <small>Deployed {{ app.builds[0].created | dpDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</small>
+    </p>
+    <!-- TODO: If user has access to push to staging application -->
+    <!--<a *ngIf="lane.id === 'review'" href="#" class="btn btn-sm btn-outline-primary">Merge</a>-->
+    <!-- TODO: https://github.com/deis/workflow/issues/559 -->
+    <!--<a *ngIf="lane.id === 'staging'" href="#" class="btn btn-sm btn-outline-primary">Promote to Production</a>-->
+  </div>
+</div>

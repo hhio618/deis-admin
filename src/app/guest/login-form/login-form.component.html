@@ -1,0 +1,16 @@
+<form novalidate (submit)="onSubmit(form)" #form="ngForm">
+  <div class="form-group" [class.has-danger]="(!username.valid && submitted) || (!username.valid && username.dirty)">
+    <label for="">Username</label>
+    <input type="text" placeholder="Username" class="form-control" [(ngModel)]="user.username" #username="ngModel" name="username" required>
+  </div>
+  <div class="form-group" [class.has-danger]="(!password.valid && submitted) || (!password.valid && password.dirty)">
+    <label for="">Password</label>
+    <input type="password" placeholder="Password" class="form-control" [(ngModel)]="user.password" #password="ngModel" name="password" required>
+  </div>
+  <div class="text-right">
+    <p class="help-block text-danger" *ngFor="let error of errors">{{ error }}</p>
+  </div>
+  <div class="text-right">
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+  </div>
+</form>

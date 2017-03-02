@@ -1,0 +1,4 @@
+<nav class="breadcrumb">
+  <a class="breadcrumb-item" [routerLink]="['/apps']">Applications</a>
+  <a class="breadcrumb-item" *ngIf="app" [routerLink]="['/apps', app.id]">{{ app.id }}</a>
+</nav>

@@ -1,0 +1,17 @@
+<nav class="navbar navbar-toggleable-sm navbar-fixed-top navbar-inverse bg-primary">
+  <a class="navbar-brand" [routerLink]="['']">Deis Admin</a>
+  <!-- Logged out -->
+
+  <div *ngIf="!user.username" class="nav navbar-nav ml-auto">
+    <a class="btn btn-success mr-1" [routerLink]="['login']">Login</a>
+    <a class="btn btn-secondary" [routerLink]="['register']">Register</a>
+  </div>
+  <!-- Logged in -->
+  <ul *ngIf="user.username" class="nav navbar-nav ml-auto">
+    <li class="nav-item">
+      <a [routerLink]="['logout']" class="nav-link">
+        <i class="fa fa-user" aria-hidden="true"></i> Logout of {{user.username}}
+      </a>
+    </li>
+  </ul>
+</nav>
